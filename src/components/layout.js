@@ -42,6 +42,11 @@ const Layout = ({ pageTitle, children }) => {
             </Link>
           </li>
           <li className={navLinkItem}>
+            <Link to="/uwb3d" className={navLinkText}  activeClassName={activeLink} partiallyActive={true}>
+              UWB 3D
+            </Link>
+          </li>
+          <li className={navLinkItem}>
             <Link to="/about" className={navLinkText}  activeClassName={activeLink} partiallyActive={true}>
               About
             </Link>
