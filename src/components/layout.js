@@ -1,5 +1,6 @@
 import * as React from 'react'
 import { Link, useStaticQuery, graphql } from 'gatsby'
+import logo from "../images/zobo-logo-200x64.jpg" // Tell webpack this JS file uses this image
 import {
   container,
   heading,
@@ -18,13 +19,22 @@ const Layout = ({ pageTitle, children }) => {
         }
       }
     }
-  `)
+  `) 
   return (
     <div className={container}>
       <title>{pageTitle} | {data.site.siteMetadata.title}</title>
        {/* <header className={siteTitle}>{data.site.siteMetadata.title}</header> */}
-      <nav>
+      <nav> 
         <ul className={navLinks} >
+        <li>
+          <Link to='/' className={'navBarBrand'}>
+                <img
+                  /*className={'img-responsive displayInline'}*/
+                  src={logo} /*{'/images/zobo-logo-300x96.jpg'}*/
+                  alt={'Zobo'}
+                />
+              </Link>
+          </li>
           <li className={navLinkItem}>
        {/* <Link to="/" className={navLinkText}  activeStyle={{color: "rgb(226, 148, 3)" }}  > */}
             <Link to="/" className={navLinkText}  activeClassName={activeLink}  >

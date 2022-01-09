@@ -11,10 +11,12 @@
     display: flex;
     list-style: none;
     padding-left: 0;
-    font-size: large;
+    font-size: large; 
+    /*justify-content: right;*/
   }
   .nav-link-item {
     padding-right: 2rem;
+    align-self: flex-end;
   }
   /*.nav-link-item:hover{
     border-bottom: 4px solid rgb(226, 148, 3);
