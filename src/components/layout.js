@@ -41,11 +41,23 @@ const Layout = ({ pageTitle, children }) => {
               Home
             </Link>
           </li>
-          <li className={navLinkItem}>
+         {/*} <li className={navLinkItem}>
             <Link to="/uwb3d" className={navLinkText}  activeClassName={activeLink} partiallyActive={true}>
               UWB 3D
             </Link>
-          </li>
+          </li> 
+            
+          <li className={navLinkItem}>
+            <Link to="/uwb-in-3d" className={navLinkText}  activeClassName={activeLink} partiallyActive={true}>
+              UWB In 3D
+            </Link>
+          </li> 
+          <li className={navLinkItem}>
+            <Link to="/uwb-in-3dv2" className={navLinkText}  activeClassName={activeLink} partiallyActive={true}>
+              UWB In 3D v2
+            </Link>
+          </li> 
+  */}
           <li className={navLinkItem}>
             <Link to="/about" className={navLinkText}  activeClassName={activeLink} partiallyActive={true}>
               About

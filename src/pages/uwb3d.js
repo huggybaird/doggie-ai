@@ -22,7 +22,7 @@ const Box = props => {
       onPointerOver={e => setHover(true)}
       onPointerOut={e => setHover(false)}
     >
-      <boxBufferGeometry attach="geometry" args={[1, 1, 1]} />
+      <boxBufferGeometry attach="geometry" args={[2, 2, 2]} />
       <meshStandardMaterial
         attach="material"
         color={hovered ? "hotpink" : "orange"}
@@ -35,12 +35,12 @@ const Uwb3dPage = () => (
     
     <Layout pageTitle="Ultra Wide Band (UWB) 3D Visualiation of indoor positioning">
       <p>Ultra Wide Band (UWB) 3D Visualiation of indoor positioning.</p>
-      <div style={{ width: '100%', height: '800px'}}>
+      <div style={{ position:"relative",width: '100%', height: '600px'}}>
         <Canvas>
             <ambientLight />
             <pointLight position={[10, 10, 10]} />
-            <Box position={[-1.2, 0, 0]} />
-            <Box position={[1.2, 0, 0]} />
+            <Box position={[-2.5, 0, 0]} />
+            <Box position={[2.5, 0, 0]} />
         </Canvas>
         </div>
     </Layout>
