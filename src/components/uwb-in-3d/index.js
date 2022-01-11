@@ -4,7 +4,7 @@ import Helmet from 'react-helmet'
 import { Canvas, useFrame } from "@react-three/fiber"
 import { Sky, OrbitControls, Line } from "@react-three/drei"
 import Grass from "./Grass"
-import Layout from '../../components/layout'
+import Layout from '../layout'
 import { useSpring, animated } from '@react-spring/three'
 
 const dogWalkPoints = [[0, 2, 0], [10, 2, 0], [10, 2, 20]];
