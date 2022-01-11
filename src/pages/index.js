@@ -1,14 +1,14 @@
-import React, { Suspense,useState, useEffect, useUpdate, useLayoutEffect, useMemo} from "react" 
+import React, { Suspense,useState, useRef, useEffect, useUpdate, useLayoutEffect, useMemo} from "react" 
 import * as THREE from 'three'
 import Helmet from 'react-helmet'
-import { Canvas, useFrame } from "@react-three/fiber"
-import { Sky, OrbitControls, Line } from "@react-three/drei"
+import { Canvas, useFrame,useLoader } from "@react-three/fiber"
+import { Sky, OrbitControls, Line, useGLTF } from "@react-three/drei"
 import Grass from "../components/uwb-in-3d/Grass"
 import Layout from '../components/layout'
-import { useSpring, animated } from '@react-spring/three'
-import noise from 'simplenoise'
+import { useSpring, animated } from '@react-spring/three' 
+import { GLTFLoader } from 'three/examples/jsm/loaders/GLTFLoader' 
+import Dog from '../components/uwb-in-3d/Dog'
 
- 
 function getStartPositions(){
     const startPositions = [...Array(1000)].map((_, i) => {
       const position = new THREE.Vector3()
@@ -33,6 +33,7 @@ function getStartPositions(){
 
 function Dots() {
     const ref = React.useRef()
+    const myDog = React.useRef()
     const { vec, transform, positions } = useMemo(() => {
       const vec = new THREE.Vector3()
       const transform = new THREE.Matrix4()
@@ -43,6 +44,8 @@ function Dots() {
     let tick=0;
     let moveX=0;
     let moveZ=0;
+    
+    //const gltf = useLoader(GLTFLoader, '/images/dog.glb')
     useFrame(({ clock }) => { 
       if(Math.floor(clock.elapsedTime*10)>tick && tick<999){
         if(Math.floor(clock.elapsedTime*10)%10==0){ //every 5 ticks we change directions
@@ -54,12 +57,13 @@ function Dots() {
         if(Math.abs(newX)>50){newX=50*Math.sign(newX)}
         if(Math.abs(newZ)>50){newZ=50*Math.sign(newZ)}
         positions[tick+1].x = newX
-        positions[tick+1].z = newZ
-        
+        positions[tick+1].z = newZ 
         console.log("Adding tick"+tick.toString() + "  ["+newX.toString()+","+newZ.toString()+"]")
         transform.setPosition(positions[tick+1])
         ref.current.setMatrixAt(tick+1, transform)
         ref.current.instanceMatrix.needsUpdate = true
+        //myDog.current.props = (positions[tick+1])
+        //myDog.current.instanceMatrix.needsUpdate = true
         tick++ 
         // let newX = positions[tick].x + (Math.random()*5 * (Math.round(Math.random()) ? 1 : -1))
         // let newZ = positions[tick].z+ (Math.random()*5 * (Math.round(Math.random()) ? 1 : -1))
@@ -83,6 +87,7 @@ function Dots() {
       // ref.current.instanceMatrix.needsUpdate = true
     })
     return (
+      <>
       <instancedMesh ref={ref} args={[null, null, 1000]} castShadow> 
         <sphereBufferGeometry args={[1, 1.5, 1.5 ]} attach="geometry" /> 
         <meshStandardMaterial
@@ -92,11 +97,16 @@ function Dots() {
         roughness={0.1}
         metalness={0.1}
       />
-      </instancedMesh>
+      </instancedMesh>  
+          <Dog ref={myDog} position={[1, 1, 10]} />
+{/*<primitive object={gltf.scene} position={[0, 0, 0]}  /> 
+*/}
+          
+        </>
     )
   }
 
-
+  
 const IndexPage = () => ( 
     <Layout pageTitle="Ultra Wide Band (UWB) 3D Visualiation of indoor positioning">
       <p>Ultra Wide Band (UWB) 3D Visualiation of indoor positioning.</p>
@@ -108,7 +118,10 @@ const IndexPage = () => (
         <Suspense fallback={null}>
             <Grass />
         </Suspense>
+        <Suspense fallback={null}>
         <Dots /> 
+        </Suspense>
+        
         <OrbitControls enablePan={true} enableZoom={true} enableRotate={true} />
     </Canvas>
         </div>
@@ -137,3 +150,12 @@ export default IndexPage
 // }
 
 // export default IndexPage
+
+
+
+
+
+
+
+
+ 
