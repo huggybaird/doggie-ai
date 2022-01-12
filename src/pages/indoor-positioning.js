@@ -4,7 +4,7 @@ import Helmet from 'react-helmet'
 import { Canvas, useFrame,useLoader } from "@react-three/fiber"
 import { Sky, OrbitControls, Line, useGLTF } from "@react-three/drei"
 import Grass from "../components/uwb-in-3d/Grass"
-import Layout from '../components/layout'
+import Layout from '../components/Layout'
 import { useSpring, animated } from '@react-spring/three' 
 import { GLTFLoader } from 'three/examples/jsm/loaders/GLTFLoader' 
 import Dog from '../components/uwb-in-3d/Dog'
