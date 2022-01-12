@@ -10,7 +10,7 @@ const Layout = props => (
     <SEO />
     <div className={`page${props.bodyClass ? ` ${props.bodyClass}` : ''}`}>
       <div id="wrapper" className="wrapper">
-        <Header />
+        <Header /> 
         {props.children}
       </div> 
       <SubFooter />
