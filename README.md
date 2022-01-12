@@ -1,54 +1,70 @@
-<p align="center">
-  <a href="https://www.gatsbyjs.com/?utm_source=starter&utm_medium=readme&utm_campaign=minimal-starter">
-    <img alt="Gatsby" src="https://www.gatsbyjs.com/Gatsby-Monogram.svg" width="60" />
-  </a>
-</p>
-<h1 align="center">
-  Gatsby minimal starter
-</h1>
+# Gatsby Serif Theme
 
-## 🚀 Quick start
+Serif is a beautiful small business theme for Gatsby. It contains content types for the archetypical small business website. The theme is fully responsive, blazing fast and artfully illustrated.
 
-1.  **Create a Gatsby site.**
+[Live Demo](https://gatsby-serif.netlify.com/) | 
+[Zerostatic Themes](https://www.zerostatic.io/)
 
-    Use the Gatsby CLI to create a new site, specifying the minimal starter.
+<a href="https://www.buymeacoffee.com/zerostatic" target="_blank"><img src="https://cdn.buymeacoffee.com/buttons/v2/default-yellow.png" alt="Buy Me A Coffee" style="height: 60px !important;width: 217px !important;" ></a>
 
-    ```shell
-    # create a new Gatsby site using the minimal starter
-    npm init gatsby
-    ```
+![Gatsby Serif Theme screenshot](https://www.zerostatic.io/theme/gatsby-serif/gatsby-serif-screenshot.png)
 
-2.  **Start developing.**
+## Theme features
 
-    Navigate into your new site’s directory and start it up.
+- Gatsby v3
+- Multi-page theme (not just a blog) that uses Markdown for multiple content-types/templates. It uses `gatsby-transformer-remark` and has several examples of querying and filtering `allMarkdownRemark`
+- Includes a graphql query in `gatsby-node.js` that creates pages and templates by content type based on the folder `src/pages/services`, `src/pages/team`,
+- Services (Markdown)
+- Team (Markdown)
+- Testimonials (Markdown)
+- Features (Data)
+- SCSS using `gatsby-plugin-sass`
+- Responsive design
+- Bootstrap 4 grid and media queries only
+- Responsive menu
+- Robust example content included
+- Royalty free illustrations included
+- SEO Titles & Meta using `gatsby-plugin-react-helmet`
+- ESLint
 
-    ```shell
-    cd my-gatsby-site/
-    npm run develop
-    ```
+## Install
 
-3.  **Open the code and start customizing!**
+gatsby 3 and node-sass 5 requires node v14 or higher
 
-    Your site is now running at http://localhost:8000!
+```
+npm install
+```
 
-    Edit `src/pages/index.js` to see your site update in real-time!
+```
+npm run develop
+```
 
-4.  **Learn more**
+```
+npm run build
+```
 
-    - [Documentation](https://www.gatsbyjs.com/docs/?utm_source=starter&utm_medium=readme&utm_campaign=minimal-starter)
+## Extras
 
-    - [Tutorials](https://www.gatsbyjs.com/tutorial/?utm_source=starter&utm_medium=readme&utm_campaign=minimal-starter)
+### License
 
-    - [Guides](https://www.gatsbyjs.com/tutorial/?utm_source=starter&utm_medium=readme&utm_campaign=minimal-starter)
+- Don't create ports or new versions of this theme without asking me
+- You can't re-distribute or re-sell this theme as your own template
 
-    - [API Reference](https://www.gatsbyjs.com/docs/api-reference/?utm_source=starter&utm_medium=readme&utm_campaign=minimal-starter)
+### Credits 
 
-    - [Plugin Library](https://www.gatsbyjs.com/plugins?utm_source=starter&utm_medium=readme&utm_campaign=minimal-starter)
+- Beautiful royalty free Illustrations by Icons8 - https://icons8.com/illustrations/style--pixeltrue
+- Stock images by Unsplash - https://unsplash.com/
+- Feature icons by Noun Project - https://thenounproject.com/
 
-    - [Cheat Sheet](https://www.gatsbyjs.com/docs/cheat-sheet/?utm_source=starter&utm_medium=readme&utm_campaign=minimal-starter)
+### Other Themes by Zerostatic
 
-## 🚀 Quick start (Gatsby Cloud)
+- [Jekyll Serif](https://github.com/zerostaticthemes/jekyll-serif-theme)
+- [Jekyll Advance](https://www.zerostatic.io/theme/jekyll-advance/)
+- [Hugo Whisper](https://github.com/zerostaticthemes/hugo-whisper-theme)
+- [Hugo Serif](https://github.com/zerostaticthemes/hugo-serif-theme)
+- [Hugo Winston](https://github.com/zerostaticthemes/hugo-winston-theme)
+- [Hugo Advance](https://www.zerostatic.io/theme/hugo-advance/)
+- [Hugo Paradigm](https://www.zerostatic.io/theme/hugo-paradigm/)
 
-Deploy this starter with one click on [Gatsby Cloud](https://www.gatsbyjs.com/cloud/):
 
-[<img src="https://www.gatsbyjs.com/deploynow.svg" alt="Deploy to Gatsby Cloud">](https://www.gatsbyjs.com/dashboard/deploynow?url=https://github.com/gatsbyjs/gatsby-starter-minimal)
+🇦🇺 **Made in Australia** by Robert Austin - leave a star mate!

@@ -1,69 +1,52 @@
+const guid = process.env.NETLIFY_GOOGLE_ANALYTICS_ID;
+
 module.exports = {
   siteMetadata: {
-    siteUrl: "https://www.yourdomain.tld",
-    title: "Doggie AI Trainer Webstie",
+    title: 'Zobo.Dev - Where technology meets simplicity',
+    description: 'Zobo.Dev - Where technology meets simplicity'
   },
   plugins: [
+    'gatsby-plugin-sass',
+    'gatsby-transformer-json',
+    'gatsby-transformer-remark',
+    'gatsby-plugin-react-helmet',
     {
-      resolve: "gatsby-plugin-google-analytics",
+      resolve: 'gatsby-source-filesystem',
       options: {
-        trackingId: "1234567890ABCDEFT-TODO-Add-From-Google-Later",
-      },
-    },
-    "gatsby-plugin-sitemap",
-    {
-      resolve: 'gatsby-plugin-mdx',
-      options: {
-        gatsbyRemarkPlugins: [
-          {
-            resolve: "gatsby-remark-images",
-            options: {
-              maxWidth: 1200,
-              linkImagesToOriginal: false,
-              //srcSetBreakpoints: [  900, 1200, 1800 ]
-              //sizeByPixelDensity: true
-            }
-          },
-          //{
-         //   resolve: 'gatsby-remark-copy-linked-files'
-         // }
-        ],
-        extensions: [".mdx", ".md"]
+        path: `${__dirname}/src/content`,
+        name: 'content'
       }
     },
     {
-      resolve: "gatsby-source-filesystem",
+      resolve: 'gatsby-source-filesystem',
       options: {
-        name: "pages",
-        path: "./src/pages/",
-      },
-      __key: "pages",
-    },
-    "gatsby-plugin-image",
-    "gatsby-plugin-sharp",
-    "gatsby-transformer-sharp",
-    {
-      resolve: `gatsby-transformer-remark`,
-      options: {
-        plugins: [
-          {
-            resolve: `gatsby-remark-images`,
-            options: {
-              // It's important to specify the maxWidth (in pixels) of
-              // the content container as this plugin uses this as the
-              // base for generating different widths of each image.
-              maxWidth: 1200,
-            },
-          },
-        ],
-      },
-    },
-    {
-      resolve: "gatsby-source-filesystem",
-      options: {
-        name: `blog`,
-        path: `${__dirname}/blog`,
+        path: `${__dirname}/src/pages`,
+        name: 'pages'
       }
     },
-  ],
+    {
+      resolve: 'gatsby-source-filesystem',
+      options: {
+        path: `${__dirname}/src/data`,
+        name: 'data'
+      }
+    },
+    {
+      resolve: 'gatsby-plugin-google-analytics',
+      options: {
+        trackingId: guid || 'UA-XXX-1',
+        // Puts tracking script in the head instead of the body
+        head: false
+      }
+    },
+    {
+      resolve: `gatsby-plugin-google-fonts`,
+      options: {
+        fonts: [
+          'Playfair+Display:400,700'
+        ],
+        display: 'swap'
+      }
+    }
+  ]
 };

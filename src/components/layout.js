@@ -1,80 +1,21 @@
-import * as React from 'react'
-import { Link, useStaticQuery, graphql } from 'gatsby'
-import logo from "../images/zobo-logo-200x64.jpg" // Tell webpack this JS file uses this image
-import {
-  container,
-  heading,
-  navLinks,
-  navLinkItem,
-  navLinkText,
-  siteTitle,
-  activeLink,
-} from './layout.module.css'
-const Layout = ({ pageTitle, children }) => {
-  const data = useStaticQuery(graphql`
-    query {
-      site {
-        siteMetadata {
-          title
-        }
-      }
-    }
-  `) 
-  return (
-    <div className={container}>
-      <title>{pageTitle} | {data.site.siteMetadata.title}</title>
-       {/* <header className={siteTitle}>{data.site.siteMetadata.title}</header> */}
-      <nav> 
-        <ul className={navLinks} >
-        <li>
-          <Link to='/' className={'navBarBrand'}>
-                <img
-                  /*className={'img-responsive displayInline'}*/
-                  src={logo} /*{'/images/zobo-logo-300x96.jpg'}*/
-                  alt={'Zobo'}
-                />
-              </Link>
-          </li>
-          <li className={navLinkItem}>
-       {/* <Link to="/" className={navLinkText}  activeStyle={{color: "rgb(226, 148, 3)" }}  > */}
-            <Link to="/" className={navLinkText}  activeClassName={activeLink}  >
-              Home
-            </Link>
-          </li>
-         {/*} <li className={navLinkItem}>
-            <Link to="/uwb3d" className={navLinkText}  activeClassName={activeLink} partiallyActive={true}>
-              UWB 3D
-            </Link>
-          </li> 
-            
-          <li className={navLinkItem}>
-            <Link to="/uwb-in-3d" className={navLinkText}  activeClassName={activeLink} partiallyActive={true}>
-              UWB In 3D
-            </Link>
-          </li> 
-          <li className={navLinkItem}>
-            <Link to="/uwb-in-3dv2" className={navLinkText}  activeClassName={activeLink} partiallyActive={true}>
-              UWB In 3D v2
-            </Link>
-          </li> 
-  */}
-          <li className={navLinkItem}>
-            <Link to="/about" className={navLinkText}  activeClassName={activeLink} partiallyActive={true}>
-              About
-            </Link>
-          </li>
-          <li className={navLinkItem}>
-            <Link to="/blog" className={navLinkText} activeClassName={activeLink} partiallyActive={true}>
-              Blog
-            </Link>
-          </li>
-        </ul>
-      </nav>
-      <main>
-        <h1 className={heading}>{pageTitle}</h1>
-        {children}
-      </main>
+import React from 'react';
+import SEO from './SEO';
+import Header from './Header';
+import Footer from './Footer';
+import SubFooter from './SubFooter';
+import '../scss/style.scss';
+
+const Layout = props => (
+  <>
+    <SEO />
+    <div className={`page${props.bodyClass ? ` ${props.bodyClass}` : ''}`}>
+      <div id="wrapper" className="wrapper">
+        <Header />
+        {props.children}
+      </div> 
+      <SubFooter />
     </div>
-  )
-}
-export default Layout
+  </>
+);
+
+export default Layout;

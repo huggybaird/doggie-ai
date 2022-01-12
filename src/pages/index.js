@@ -1,161 +1,143 @@
-import React, { Suspense,useState, useRef, useEffect, useUpdate, useLayoutEffect, useMemo} from "react" 
-import * as THREE from 'three'
-import Helmet from 'react-helmet'
-import { Canvas, useFrame,useLoader } from "@react-three/fiber"
-import { Sky, OrbitControls, Line, useGLTF } from "@react-three/drei"
-import Grass from "../components/uwb-in-3d/Grass"
-import Layout from '../components/layout'
-import { useSpring, animated } from '@react-spring/three' 
-import { GLTFLoader } from 'three/examples/jsm/loaders/GLTFLoader' 
-import Dog from '../components/uwb-in-3d/Dog'
+import React from 'react';
+import { graphql, Link } from 'gatsby';
+import Helmet from 'react-helmet';
+import SEO from '../components/SEO';
+import Layout from '../components/Layout';
+import Call from '../components/Call';
 
-function getStartPositions(){
-    const startPositions = [...Array(1000)].map((_, i) => {
-      const position = new THREE.Vector3()
-      // Place in a grid
-      // position.x = (i % 100) - 50
-      // position.y = Math.floor(i / 100) - 50
+const Home = props => {
+  const intro = props.data.intro;
+  const site = props.data.site.siteMetadata;
+  const services = props.data.services.edges;
+  const features = props.data.features.edges;
+  const introImageClasses = `intro-image ${intro.frontmatter.intro_image_absolute && 'intro-image-absolute'} ${intro.frontmatter.intro_image_hide_on_mobile && 'intro-image-hide-mobile'}`;
 
-      // // Offset every other column (hexagonal pattern)
-      // position.y += (i % 2) * 0.5
+  return (
+    <Layout bodyClass="page-home">
+      <SEO title={site.title} />
+      <Helmet>
+        <meta
+          name="description"
+          content="Small Business Theme. Multiple content types using Markdown and JSON sources. Responsive design and SCSS. This is a beautiful and artfully designed starting theme."
+        />
+      </Helmet>
 
-      // // Add some noise
-      // position.x += Math.random() * 0.3
-      // position.y += Math.random() * 0.3
-      position.x=0;
-      position.y =5;
-      position.z=0;
-      return position
-    })
-    return startPositions
-  }
-
-
-function Dots() {
-    const ref = React.useRef()
-    const myDog = React.useRef()
-    const { vec, transform, positions } = useMemo(() => {
-      const vec = new THREE.Vector3()
-      const transform = new THREE.Matrix4()
-      const positions = getStartPositions()
-      return { vec, transform, positions }
-    }, [])
-
-    let tick=0;
-    let moveX=0;
-    let moveZ=0;
-    
-    //const gltf = useLoader(GLTFLoader, '/images/dog.glb')
-    useFrame(({ clock }) => { 
-      if(Math.floor(clock.elapsedTime*10)>tick && tick<999){
-        if(Math.floor(clock.elapsedTime*10)%10==0){ //every 5 ticks we change directions
-          moveX=(Math.random()*3 * (Math.round(Math.random()) ? 1 : -1))
-          moveZ=(Math.random()*3 * (Math.round(Math.random()) ? 1 : -1))
-        }
-        let newX = moveX+ positions[tick].x;
-        let newZ = moveZ+ positions[tick].z;
-        if(Math.abs(newX)>50){newX=50*Math.sign(newX)}
-        if(Math.abs(newZ)>50){newZ=50*Math.sign(newZ)}
-        positions[tick+1].x = newX
-        positions[tick+1].z = newZ 
-        console.log("Adding tick"+tick.toString() + "  ["+newX.toString()+","+newZ.toString()+"]")
-        transform.setPosition(positions[tick+1])
-        ref.current.setMatrixAt(tick+1, transform)
-        ref.current.instanceMatrix.needsUpdate = true
-        //myDog.current.props = (positions[tick+1])
-        //myDog.current.instanceMatrix.needsUpdate = true
-        tick++ 
-        // let newX = positions[tick].x + (Math.random()*5 * (Math.round(Math.random()) ? 1 : -1))
-        // let newZ = positions[tick].z+ (Math.random()*5 * (Math.round(Math.random()) ? 1 : -1))
-        // if(Math.abs(newX)>50){newX=50*Math.sign(newX)}
-        // if(Math.abs(newZ)>50){newZ=50*Math.sign(newZ)}
-        // positions[tick+1].x = newX
-        // positions[tick+1].z = newZ
-        
-        // console.log("Adding tick"+tick.toString() + "  ["+newX.toString()+","+newZ.toString()+"]")
-        // transform.setPosition(positions[tick+1])
-        // ref.current.setMatrixAt(tick+1, transform)
-        // ref.current.instanceMatrix.needsUpdate = true
-        // tick++ 
-      }
-      // const scale = 1 + Math.sin(clock.elapsedTime) * 0.3
-      // for (let i = 0; i < 1000; ++i) {
-      //   vec.copy(positions[i]).multiplyScalar(scale)
-      //   transform.setPosition(vec)
-      //   ref.current.setMatrixAt(i, transform)
-      // }
-      // ref.current.instanceMatrix.needsUpdate = true
-    })
-    return (
-      <>
-      <instancedMesh ref={ref} args={[null, null, 1000]} castShadow> 
-        <sphereBufferGeometry args={[1, 1.5, 1.5 ]} attach="geometry" /> 
-        <meshStandardMaterial
-        attach="material"
-        color="orange"
-        transparent
-        roughness={0.1}
-        metalness={0.1}
-      />
-      </instancedMesh>  
-          <Dog ref={myDog} position={[1, 1, 10]} />
-{/*<primitive object={gltf.scene} position={[0, 0, 0]}  /> 
-*/}
-          
-        </>
-    )
-  }
-
-  
-const IndexPage = () => ( 
-    <Layout pageTitle="Ultra Wide Band (UWB) 3D Visualiation of indoor positioning">
-      <p>Ultra Wide Band (UWB) 3D Visualiation of indoor positioning.</p>
-      <div style={{ position:"relative",width: '100%', height: '600px'}}>
-      <Canvas camera={{ position: [15, 15, 30] }}>
-        <Sky azimuth={1} inclination={0.6} distance={1000} />
-        <ambientLight />
-        <pointLight position={[10, 10, 10]} />
-        <Suspense fallback={null}>
-            <Grass />
-        </Suspense>
-        <Suspense fallback={null}>
-        <Dots /> 
-        </Suspense>
-        
-        <OrbitControls enablePan={true} enableZoom={true} enableRotate={true} />
-    </Canvas>
+      <div className="intro">
+        <div className="container">
+          <div className="row justify-content-start">
+            <div className="col-12 col-md-7 col-lg-6 order-2 order-md-1">
+              <div dangerouslySetInnerHTML={{ __html: intro.html }} />
+              <Call showButton />
+            </div>
+            {intro.frontmatter.intro_image && (
+              <div className="col-12 col-md-5 col-lg-6 order-1 order-md-2 position-relative">
+                <img alt={intro.frontmatter.title} className={introImageClasses} src={intro.frontmatter.intro_image} />
+              </div>
+            )}
+          </div>
         </div>
+      </div>
+
+      {services.length > 0 && (
+        <div className="strip">
+          <div className="container pt-6 pb-6 pb-md-10">
+            <div className="row justify-content-start">
+              {services.map(({ node }) => (
+                <div key={node.id} className="col-12 col-md-4 mb-1">
+                  <div className="service service-summary">
+                    <div className="service-content">
+                      <h2 className="service-title">
+                        <Link to={node.fields.slug}>{node.frontmatter.title}</Link>
+                      </h2>
+                      <p>{node.excerpt}</p>
+                    </div>
+                  </div>
+                </div>
+              ))}
+            </div>
+            <div className="row justify-content-center">
+              <div className="col-auto">
+                <Link className="button button-primary" to="/services/">View All Services</Link>
+              </div>
+            </div>
+          </div>
+        </div>
+      )}
+
+      {features.length > 0 && (
+        <div className="strip strip-grey">
+          <div className="container pt-6 pb-6 pt-md-10 pb-md-10">
+            <div className="row justify-content-center">
+              {features.map(({ node }) => (
+                <div key={node.id} className="col-12 col-md-6 col-lg-4 mb-2">
+                  <div className="feature">
+                    {node.image && (
+                      <div className="feature-image">
+                        <img src={node.image} />
+                      </div>
+                    )}
+                    <h2 className="feature-title">{node.title}</h2>
+                    <div className="feature-content">{node.description}</div>
+                  </div>
+                </div>
+              ))}
+            </div>
+          </div>
+        </div>
+      )}
     </Layout>
-)
+  );
+};
 
-export default IndexPage 
+export const query = graphql`
+  query {
+    services: allMarkdownRemark(
+      filter: { fileAbsolutePath: { regex: "/services\/.*/" } }
+      sort: { fields: [frontmatter___weight], order: ASC }
+      limit: 6
+    ) {
+      edges {
+        node {
+          id
+          frontmatter {
+            title
+            date(formatString: "DD MMMM YYYY")
+          }
+          fields {
+            slug
+          }
+          excerpt
+        }
+      }
+    }
+    intro: markdownRemark(
+      fileAbsolutePath: {regex: "/content/index.md/"}
+    ) {
+        html
+        frontmatter {
+          image
+          intro_image
+          intro_image_absolute
+          intro_image_hide_on_mobile
+          title
+        }
+    }
+    features: allFeaturesJson {
+      edges {
+        node {
+          id
+          title
+          description
+          image
+        }
+      }
+    }
+    site {
+      siteMetadata {
+        title
+      }
+    }
+  }
+`;
 
-
-
-
-// import * as React from 'react'
-// import Layout from '../components/layout'
-// import { StaticImage } from 'gatsby-plugin-image'
-
-// const IndexPage = () => {
-//   return (
-//     <Layout pageTitle="Home Page">
-//       <p>I'm making this by following the Gatsby Tutorial.</p>
-//       {/*<StaticImage
-//         alt="Clifford, a reddish-brown pitbull, posing on a couch and looking stoically at the camera"
-//         src="../images/E1oMV3QVgAIr1NT.webp"
-//       />*/}
-//     </Layout>
-//   )
-// }
-
-// export default IndexPage
-
-
-
-
-
-
-
-
- 
+export default Home;
