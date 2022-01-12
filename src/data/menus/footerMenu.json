@@ -8,5 +8,11 @@
         "name": "Contact",
         "url": "/contact/",
         "weight": 2
+    },  
+    {
+        "name": "Indoor Positioning",
+        "url": "/indoor-positioning/",
+        "weight": 3
     }
+
 ]
