@@ -4,7 +4,7 @@ import Header from './Header';
 import Footer from './Footer';
 import SubFooter from './SubFooter';
 import '../scss/style.scss';
-
+ 
 const Layout = props => (
   <>
     <SEO />
