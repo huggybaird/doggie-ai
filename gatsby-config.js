@@ -42,9 +42,9 @@ module.exports = {
           name: "Zobo.dev - Software, Robotics, Startups", // Website name used for homescreen (PWA) and SEO
           description: "Zobo.dev - A place for techies", // Website description used for RSS feeds/meta description tag
           language: "en", // Sets the global HTML lang attribute
-          logoUrl: "/logos/logo-1024.png", // Logo used for SEO
+          logoUrl: `/zobo-icon220x220.png`, //"/images/logo/zobo-logo600x110.jpg", // Logo used for SEO
           fbAppId: "1825356251115265", // FB Application ID for using app insights
-          twitterName: "Vagr9K", // Twitter handle of the website
+          twitterName: "huggybaird2", // Twitter handle of the website
           url: "https://zobo.dev", // Domain of your website without the pathPrefix
           rss: "/rss.xml", // Path to the RSS file
           rssTitle: "Zobo.dev RSS feed", // Title of the RSS feed
@@ -74,7 +74,7 @@ module.exports = {
         organization: {
           name: "Zobo.dev",
           description: "Robotics & Technology",
-          logoUrl: "/images/logo/zobo-logo600x110.jpg",
+          logoUrl: `/zobo-icon220x220.png`, //"/images/logo/zobo-logo600x110.jpg",
           url: "https://zobo.dev", // URL of the organization website
         },
 
@@ -88,7 +88,7 @@ module.exports = {
         embeddedVideoWidth: 920, // MDX embedded video width in pixels
 
         iconPath: undefined, // Icon used for manifest icon creation.
-        iconList: [], // Icons used for the web manifest. Can be used to override iconPath for a more pixel perfect control.
+        iconList: [  ], // Icons used for the web manifest. Can be used to override iconPath for a more pixel perfect control.
         iconCachePaths: undefined, // Glob pattern path for the icons to be cached by the gatsby-plugin-offline
 
         basePath: `/blog`, // Base path for mounting pages. Allows for multiple themes to be used in a single website.
