@@ -11,14 +11,21 @@ export const HomeButton = styled(PrimaryLink)`
   grid-auto-flow: column;
   grid-gap: 16px;
   align-items: center;
-`;
 
+`;
+ 
 export const Wrapper = styled.header`
   display: flex;
   flex-direction: row;
 
   justify-content: space-between;
   align-items: center;
+
+  
+    
+  @media screen and (max-width: 600px) {
+    flex-direction: column;
+}
 `;
 
 export const NavGrid = styled.nav`
@@ -27,6 +34,11 @@ export const NavGrid = styled.nav`
   grid-gap: 24px;
 
   align-items: flex-start;
+  margin-top: 10px;
+  
+}
+ 
+  
 `;
 
 export const SiteTitle = styled.p`
