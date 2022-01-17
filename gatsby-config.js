@@ -74,7 +74,7 @@ module.exports = {
         organization: {
           name: "Zobo.dev",
           description: "Robotics & Technology",
-          logoUrl: `/zobo-icon220x220.png`, //"/images/logo/zobo-logo600x110.jpg",
+          logoUrl: `/zobo-icon220x220.png`, //"/images/logo/zobo-logo600x110.jpg", 
           url: "https://zobo.dev", // URL of the organization website
         },
 
