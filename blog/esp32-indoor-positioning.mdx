@@ -1,0 +1,224 @@
+---
+title: "ESP32 UWB Indoor positioning"
+cover: images/1640138203_ESP32-UWB-Indoor-Positioning-Test-Makerfabs.jpg
+coverAlt: "Makerfabs UWB chip"
+description: "Ultra-wideband (UWB) is a short-range, wireless communication protocol that operates through radio waves, enables secure reliable ranging and precision sensing, creating a new dimension of spatial context for wireless devices."
+category: "tech"
+datePublished: "2022-01-11"
+dateModified: "2022-01-11"
+tags:
+  - programming
+  - uwb
+  - testing 
+---
+
+
+## ESP32 UWB Indoor Positioning Test
+
+###Overview
+*1.1 Introduce
+DW1000 is the world's first single-chip wireless transceiver based on Ultra Wideband techniques. It provides a new approach to real-time location and indoor positioning systems, location-based services, wireless sensor networks. It enables to develop cost-effective RTLS solutions with precise indoor and outdoor positioning to within 10 cm.
+
+The Makerfabs ESP32 UWB based on ESP32 and DW1000 solution, it acts like a continuously scanning radar, that precisely locks onto another device and communicates with it, thus calculating its own location, with the ESP32 WiFi/Bluetooth, it could be a solution for wireless indoor positioning.
+
+How To Use Themes in Gatsby
+DevelopmentJavaScriptGatsbyJS
+joshuatzdo
+By Joshua Tzucker
+
+Published onOctober 1, 2021 3.2kviews
+The author selected the Internet Archive to receive a donation as part of the Write for DOnations program.
+
+Introduction
+Gatsby 1.0 was released in 2017, and since then has continued to release new features, while maintaining its high customizability as a static site generator. Added features have taken the form of plugins, new APIs, utilities, and configuration options. Each of these features can be individually used and customized or combined together to apply specific use cases. However, since many sites benefit from the same combinations of features and settings, Gatsby introduced Gatsby themes.
+
+Themes in Gatsby refer specifically to plugins that act as a collection of configuration options, functionality, and/or user interface (UI) elements. Separating out shared features into maintained themes makes keeping your site up-to-date easier, and also lets you spend less time configuring your site and more time developing your content.
+
+In this tutorial, you will install, configure, and use a Gatsby theme for publishing blog posts: gatsby-theme-blog. This plugin bundles multiple features, such as MDX support and code highlighting, into one convenient package. Throughout the tutorial, you will follow the process of using this specific Gatsby theme, which you can then apply to themes in general.
+
+Each step will take you through an important part of using Gatsby themes, and by the end you will have seen how this process can be applied to any Gatsby theme that you might want to use in the future.
+
+Prerequisites
+Before starting, here are a few things you will need:
+
+A local installation of Node.js for running Gatsby and building your site. The installation procedure varies by operating system, but DigitalOcean has guides for Ubuntu 20.04 and macOS, and you can always find the latest release on the official Node.js download page.
+Some familiarity with JavaScript, for working in Gatsby. The JavaScript language is an expansive topic, but a good starting point is our How To Code in JavaScript series.
+A new Gatsby project, scaffolded from gatsby-starter-default. To build a new Gatsby project from scratch, you can refer to Step 1 of the How To Set Up Your First Gatsby Website tutorial.
+This tutorial was tested on Node.js v14.16.1, npm v6.14.12, Gatsby v3.11.1, and gatsby-theme-blog v3.0.0.
+
+Step 1 — Finding and Installing a Theme
+Although this tutorial will walk you through using a specific theme, gatsby-theme-blog, each step also applies conceptually to Gatsby themes in general. This applies to this first step as well: finding a theme you wish to use and installing it with npm.
+
+Gatsby provides guidance to plugin and theme authors on how they should publish their Gatsby packages, which makes it easier to find a theme to fit your needs. Theme developers are instructed to tag their theme packages with both gatsby and gatsby-theme as keywords, which are then scanned by package registries (where the files are actually hosted) and made searchable.
+
+This tutorial follows the use-case of building a Gatsby-powered site with a blog sub-section. As the developer, you are looking for a theme to add support for MDX, code highlighting, and more. Although Gatsby has its own plugin browser, it actually pulls its listings from the npm registry, so your first step is to start your search directly in the npm registry search engine. By using the search input of blog keywords:gatsby-theme, you will limit your results to only those plugins that have the gatsby-theme keyword, as shown in the following screenshot:
+
+npm results page for the "blog keywords:gatsby-theme" search. "gatsby-theme-blog" is the first package.
+
+In this tutorial, you will be using gatsby-theme-blog, so select that package. With gatsby-theme-blog selected as the theme you are going to install, the next part of this step is to actually install it, along with its dependencies. Navigate to your existing Gatsby project and run the following command in the directory:
+
+npm install gatsby-theme-blog
+ 
+After the dependencies have finished installing, you will see a message similar to the following:
+
+Output
+...
++ gatsby-theme-blog@3.0.0
+added 262 packages from 181 contributors and audited 2391 packages in 49.706s
+Now that you have installed the theme and its dependencies into your project, it is time to move on to loading and configuring the theme within your Gatsby project.
+
+Step 2 — Loading and Configuring the Theme
+Now that your theme is installed, you can start to actually use it across your site and modify it to your needs. In Gatsby, the main theme initialization and configuration is done by editing the root configuration file, gatsby-config.js. In this step, you will edit the configuration file to load in your theme with your desired options.
+
+Open the gatsby-config.js configuration file in your preferred editor, then add the following:
+
+gatsby-config.js
+module.exports = {
+  plugins: [
+    ...
+    `gatsby-plugin-image`,
+    {
+      resolve: 'gatsby-theme-blog',
+      options: {
+        basePath: '/posts',
+        contentPath: `md/posts`,
+      }
+    },
+    `gatsby-transformer-sharp`,
+    ...
+  ]
+}
+ 
+In this configuration code, there are two important settings that you are using custom values for. The theme uses the basePath option to set the blog’s URL, and contentPath tells the theme where to find the Markdown files to publish as blog posts. Using a value of md/posts for contentPath means that your Markdown files must reside in the md/posts directory.
+
+Once you have added this code, save your configuration file.
+
+The gatsby-theme-blog theme offers additional settings, documented in the gatsby-theme-blog README file. Since each Gatsby theme is different, the most important part of this step is referring to the documentation of your selected theme and following the exact guidance provided in it.
+
+You have now set up the theme to be loaded and configured to your liking through the Gatsby configuration file. The next step is to explore some of the new functionality that it adds to your site, testing along the way.
+
+Step 3 — Testing Functionality
+As your theme is now installed, configured, and loaded, you can now implement it in your site. This step covers how to try out some of the new functionality bundled with the theme and preview your results.
+
+You will test out the MDX, code highlighting, and Markdown processing support of gatsby-theme-blog with a new blog post file. First, you will need to make the directory to hold the files, which needs to correspond with the contentPath setting of md/posts you used in step #2. You can either make this directory manually in your file browser or make it in your terminal by running this command in the root of your Gatsby project:
+
+mkdir -p ./md/posts
+ 
+Next, create an empty MDX file, my-first-post.mdx, that will contain your new post content. Again, you can create this manually or in the terminal:
+
+touch ./md/posts/my-first-post.mdx
+ 
+Now open up the empty MDX file and add in the following code:
+
+md/posts/my-first-post.mdx
+---
+title: Learning Gatsby Themes and Trying MDX
+slug: /posts/gatsby-theme-learning
+date: 2021-08-16
+excerpt: A post about learning Gatsby themes and trying out some MDX.
+---
+
+## Welcome!
+
+This is a post where I plan to share my journey learning Gatsby Themes, and to try out some MDX.
+
+## Resources
+
+<ul>
+{[
+    {
+        link: 'https://www.gatsbyjs.com/',
+        text: 'Gatsby Website',
+        note: 'Official Website for Gatsby'
+    },
+    {
+        link: 'https://www.gatsbyjs.com/docs/themes/',
+        text: 'Gatsby Theme Documentation',
+        note: 'Documentation for Gatsby Theme usage and development'
+    },
+    {
+        link: 'https://www.digitalocean.com/community/tutorial_series/how-to-create-static-web-sites-with-gatsby-js',
+        text: 'DigitalOcean - "How To Create Static Web Sites with Gatsby.js"',
+        note: 'A DigitalOcean tutorial series on using Gatsby JS'
+    }
+].map(item => (
+    <li key={item.link}>
+        <a href={item.link} target="_blank">{item.text}</a>
+        <ul>
+            <li>{item.note}</li>
+        </ul>
+    </li>
+))}
+</ul>
+
+## Code Sample
+
+To try out code highlighting in this theme, here is a snippet of JavaScript code. This code won't run in your browser; it is for visual use only.
+ 
+At the top of the file, the section enclosed by --- is a set of key-value pairs called frontmatter. Not every theme uses the same keys, and the ones you are using in your post have been carefully selected out of the keys used by gatsby-theme-blog. You have defined a custom title, slug (the URL path), publication date, and excerpt (preview text to display on the /posts listing page).
+
+All the text that follows the frontmatter becomes the body of the post, starting with your Welcome! section. The two hash symbols (##) before the heading text tell Markdown this is a level-2 heading, which is used for the Resources section as well.
+
+In the Resources section, you have your first usage of what makes MDX different from regular Markdown: the use of React’s JSX syntax to embed React components that get merged with your Markdown and rendered into a single page. In your post, you are using JSX to turn a collection of resources about Gatsby into an HTML list of links.
+
+Finally, to test out the code syntax highlighting feature bundled with gatsby-theme-blog, add a Markdown Fenced Code Block at the end of the file:
+
+md/posts/my-first-post.mdx
+```js
+function saySomething(name) {
+    console.log(`Hello ${name}!`);
+    console.log(`Isn't learning about Gatsby fun?!`);
+}
+saySomething('Arthur');
+```
+ 
+This uses triple backticks to indicate the boundaries of where the code starts and stops.
+
+Save and close the MDX file, as you are done editing the new post.
+
+To see this post as a viewer would, testing all the features of your theme plugin, run the following command:
+
+npm run develop
+ 
+Once ready, the Gatsby CLI will prompt you to open your project in your web browser, which you can do by navigating to localhost:8000. To see the new blog listing page, visit localhost:8000/posts, and to see this specific new post, navigate to localhost:8000/posts/gatsby-theme-learning/. The blog post will look like the following:
+
+The tutorial's MDX blog post, built with Gatsby and rendered in the browser.
+
+You have just tested out some of the functionality that your newly installed theme provides, and viewed the results of your efforts in a web browser. For many users, this might cover all their needs, but for a higher level of customization, the next step explores a Gatsby concept called shadowing that lets you override pieces of a theme.
+
+Step 4 — Using Shadowing (Optional)
+At this point in the tutorial, you have already installed and configured a third-party theme within Gatsby. Configuration took place in gatsby-config.js, and was limited to the options that the theme publisher chose to make customizable. If you needed to customize a theme beyond these options, you would use a Gatsby concept called shadowing, which you will do in this step.
+
+The term shadowing refers to the practice of overriding or extending a built-in theme file with your own modifications. For those familiar with WordPress, this is similar to the concept of a child theme.
+
+With Gatsby themes, any file in the theme's source code can be shadowed, from methods that affect Gatsby nodes and file generation to UI elements and layouts. For your blog, you will shadow a React component file named bio-content.js to customize how your blog bio appears below each post. By shadowing this one file, you will affect the appearance of every blog post that goes through the gatsby-theme-blog plugin.
+
+The first step of shadowing is to create a folder in your src directory with the same exact name as the theme plugin you want to shadow. You can do this manually, or with the terminal:
+
+mkdir src/gatsby-theme-blog
+ 
+For any particular file in the theme that you want to shadow, the next step is to create a file with that exact same name and in the same directory structure as in the theme. Because you are only going to slightly modify the existing bio component, you can save some time by copying the existing file over as a starting point, with the cp (copy) command:
+
+mkdir -p src/gatsby-theme-blog/components
+cp node_modules/gatsby-theme-blog/src/components/bio-content.js src/gatsby-theme-blog/components/bio-content.js
+ 
+Now open the newly copied file, and make the following modifications:
+
+src/gatsby-theme-blog/components/bio-content.js 
+Save and close this file, as you are now done editing the shadow file.
+
+In this file, you have shadowed the original bio-content.js file, replacing the placeholder text with an author name and license information. You have done so by replacing the JSX returned by the BioContent React component. The style={{}} code is an example of inline CSS, which you have used to add some color and spacing to the license callout.
+
+By running npm run develop again in your terminal, you will launch the Gatsby development server and can preview the changes across all your blog posts:
+
+Screenshot showing the new bio-content that lists "DigitalOcean" as the author of the content and mentions the licensing for the post.
+
+By using Gatsby shadowing, you have just modified a third-party Gatsby theme beyond the standard configuration, mixing in your own custom overrides and extensions.
+
+Conclusion
+By following the steps in this tutorial, you now have a Gatsby site that uses a published theme to pull in multiple components and pieces of bundled functionality as a single dependency. Thanks to this packaged functionality, your site is now easier to update and can contain much less configuration and setup code, despite having additional features. You have also learned how to use shadowing to customize Gatsby themes at a deeper file-based level, unlocking another layer of extensibility.
+
+Although this tutorial covers a specific theme, the concepts and approaches it outlines apply to Gatsby themes in general. For more on Gatsby themes, take a look at the official Gatsby documentation. If you would like to read more about Gatsby, check out the rest of the How To Create Static Web Sites with Gatsby.js series.
+
+
+

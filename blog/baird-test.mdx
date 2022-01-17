@@ -1,0 +1,149 @@
+---
+title: "Makerfabs UWB Chip"
+cover: images/ESP32-UWB-Ultra-Wideband-1000x750.jpg
+coverAlt: "Makerfabs UWB chip"
+description: "Ultra-wideband (UWB) is a short-range, wireless communication protocol that operates through radio waves, enables secure reliable ranging and precision sensing, creating a new dimension of spatial context for wireless devices."
+category: "tech"
+datePublished: "2022-01-11"
+dateModified: "2022-01-11"
+tags:
+  - programming
+  - uwb
+  - testing 
+---
+
+
+## ESP32 UWB(Ultra Wideband)
+
+Ultra-wideband (UWB) is a short-range, wireless communication protocol that operates through radio waves, enables secure reliable ranging and precision sensing, creating a new dimension of spatial context for wireless devices.
+
+Makerfabs ESP32 UWB module is based on DW1000, it acts like a continuously scanning radar, that precisely locks onto another device (called Anchor) and communicates with it, thus calculating its own location. Once the device is near another UWB device, the devices start “ranging.” Ranging refers to calculating the time of flight (ToF) between devices: the roundtrip time of challenge/response packets.
+
+Features:
+
+* Decawave DWM1000 for precision tracking
+* ESP32 for fast & powerful applications
+* Support Wifi, Bluetooth
+* Arduino compatible
+* Micro-USB connector
+* Board USB supply voltage range: 4.8~5.5V, 5.0V Typical
+
+
+1.2 About UWB
+Ultra-wideband is a technology for transmitting information across a wide bandwidth (>500 MHz). This allows for the transmission of a large amount of signal energy without interfering with conventional narrowband and carrier wave transmission in the same frequency band. Regulatory limits in many countries allow for this efficient use of radio bandwidth, and enable high-data-rate personal area network (PAN) wireless connectivity, longer-range low-data-rate applications, and radar and imaging systems, coexisting transparently with existing communications systems.
+About-UWB-Bandwidth
+A significant difference between conventional radio transmissions and UWB is that conventional systems transmit information by varying the power level, frequency, and/or phase of a sinusoidal wave. UWB transmissions transmit information by generating radio energy at specific time intervals and occupying a large bandwidth, thus enabling pulse-position or time modulation. The information can also be modulated on UWB signals (pulses) by encoding the polarity of the pulse, its amplitude and/or by using orthogonal pulses. UWB pulses can be sent sporadically at relatively low pulse rates to support time or position modulation, but can also be sent at rates up to the inverse of the UWB pulse bandwidth. Pulse-UWB systems have been demonstrated at channel pulse rates in excess of 1.3 billion pulses per second using a continuous stream of UWB pulses (Continuous Pulse UWB or C-UWB), while supporting forward error-correction encoded data rates in excess of 675 Mbit/s.
+1.3 UWB Ranging
+A UWB radio system can be used to determine the "time of flight" of the transmission at various frequencies. Of course, the speed of the "flight" is as that of light, so the core problem is how to check the "flight" time, and thus to calculate the distance.
+
+Distance =Speed of light * Tprot
+
+For the most basic system, there at least 2 items: Device_A(called A) and Device_B(called B),  there mainly 2 measure way:
+1. Single-sided Two-way Ranging
+2. Double-sided Two-way Ranging
+1.3.1 Single-sided Two-way Ranging
+This is the most basic way of measuring:
+Single-Sided-Two-Way-Ranging
+Firstly A send the message(TX) and have a record of the time Mark, As B get the message, and have the recode of time Mark, after delay(Treplay), B send the message (TX) and have a record of the time mark, and finally A receive the message, and have the record of time mark.
+
+Then the flight time:
+Flight-Time
+
+As the Tround and Treply are stored at the same device, so the time-error offset; of course there error between A(eA) and B(eB), and the error is:
+Error
+
+That is, the error is linear to the Treply. So this way is not popular used, only suit for very short distance measuring.
+1.3.2 Double-sided Two-way Ranging
+After the "Single-sided Two-way Ranging", if A feedback again to B, it will be :
+Double-sided-Two-way-Ranging-3-Messages-Mode
+This measurement we called 3 messages mode.
+
+After the "Single-sided Two-way Ranging", if B initiate again another message and A feedback, it will be :
+Double-Sided-Two-Way-Ranging-4-Messages-Mode
+This measurement we called 4 messages mode.
+
+In either 3-message mode or 4-message mode, the flight time is calculated as:
+Flight-Time-3-Message-Mode
+ESP32-UWB-Distance
+2. Indoor Positioning with ESP32 UWB
+2.1 View
+In this application, we used 3 Makerfabs ESP32 UWB module, 2 module act as the UWB anchor, and 1 as the UWB tag, that moves in the room. As the tag gets its position, it transmit its location to devices(either PC browser, of app at phone), to show the real-time position.
+ESP32-UWB-Indoor-Positioning-Schematic
+2.2 Plane orientation algorithm
+Assume that all three UWB modules are at the same horizontal height. UWB can get the distance between Tag and two anchors, plus the distance of two anchors set in advance, we can get the length of three sides of a triangle.
+Triangle
+Two points "AB" are two anchors respectively, and "C" is the point of tag. "c" is the distance of two anchors, and UWB will get two lengths "a" and "b". Tag is "b" away from point "A" and "a" away from point "B".
+Now that we know the distance between the three sides of the triangle, we can calculate the coordinates of point "C".
+
+I used the law of cosines to calculate the cosine of Angle "A":
+Cosine-of-Angle-A
+I have the Pythagorean Theorem that gives me the sine of Angle "A":
+Pythagorean-Theorem
+cos_a = (b * b + c * c - a * a) / (2 * b * c)
+sin_a = sqrt(1 - cos_a * cos_a)
+
+If we set point "A" as the origin of the coordinate system (0,0), then we get point C (bcosα, bsinα).
+3. Equipment List
+● ESP32 UWB *3
+● Power bank
+● 5v power supply *2
+4. Code Explain
+4.1 Library
+We use arduino-dw1000 library. A library that offers basic functionality to use Decawave's DW1000 chips/modules with Arduino.(arduino-dw1000 library)
+
+Please Note to modify the DW1000 library according to Github, otherwise it will not compile for ESP32. The guide at ESP32 UWB GitHub
+
+***The full code for this application at: Makerfabs GitHub***
+4.2 Device_Anchor
+As there 2 anchors in the system, we need to set different anchor addresses for the two anchors.
+#define ANCHOR_ADD "83:17:5B:D5:A9:9A:E2:9C"// modify the address when multiple anchors, such as 83/82.
+The library uses random short addresses by default, and we need to set it to use the static addresses we set. So we need to set the UWB module to Anchor mode, LONGDATA_RANGE_LOWPOWER mode and turn off random short address, by the following code:
+DW1000Ranging.startAsAnchor(ANCHOR_ADD,
+DW1000.MODE_LONGDATA_RANGE_LOWPOWER, false);
+The Anchor code at: https://github.com/Makerfabs/Makerfabs-ESP32-UWB/tree/main/example/anchor
+4.3 Device_Tag
+Tag needs to read the distance between the two anchors and send it to PC through UDP protocol.
+
+Firstly, set WiFi and target IP address (PC).
+Set-WiFi-and-Target-IP-Address
+
+In Windows cmd, using "ipconfig" to check PC local IP.
+Check-PC-Local-IP
+
+And set UWB work in tag mode.
+Set-UWB-Work-in-Tag-Mode
+
+I used a Linked list to store the detected anchors, which fits well with the way UWB works. The content of the linked list is converted into JSON format.
+
+The obtained JSON string format is as follows:
+Obtained-JSON-String-Format
+
+Finally, data is sent to PC every second through UDP protocol.
+Data-is-Sent-to-PC-Every-Second
+
+The tag code at: https://github.com/Makerfabs/Makerfabs-ESP32-UWB/tree/main/example/IndoorPositioning/udp_uwb_tag
+4.4 Python Code
+A simple demo to calculate the position of the tag and graphically display it. Using turtle to draw.
+
+In the beginning I wanted to use Matplotlib, but it was a bit complicated. Turtle is easy, but the functions provided are rudimentary. I added some drawing functions myself to quickly draw lines, circles, rectangles, etc.
+Graphically-Display-of-the-UWB-Tag
+
+Here is my position calculation function.
+Position-Calculation-Function
+
+In fact, at first I used Helen's formula to calculate the coordinates, but couldn't tell whether a triangle was acute or obtuse.
+
+The function of demo is to receive the data of tag transmitted through UDP protocol, calculate the position of tag and draw it on the screen.
+5. Test
+After all the UWB anchors& tag programmed OK, firstly I place the two UWB anchors on both sides of the table.
+ESP32-UWB-Indoor-Positioning-Test-1
+
+And run the Python program on the PC side. Attach the UWB tag to the power bank and wait for it to connect to the WiFi in the room. After the Tag is connected to the PC, the graphical interface pops up.
+UWB-Position-Graphical-Display
+
+Move the UWB tag around, the tag position can be real-time monitored at the PC:
+ESP32-UWB-Indoor-Positioning-Test-2ESP32-UWB-Indoor-Positioning-Test-3
+
+Check the video:
+
+If you have further questions for this application about ESP32 UWB Indoor Positioning, or need some customized PCB assembly service, please contact service@makerfabs.com.wink
