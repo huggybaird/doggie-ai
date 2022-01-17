@@ -10,8 +10,8 @@ import RelatedPosts from "../../../components/RelatedPosts";
 
 const Wrapper = styled.div`
   display: grid;
-
-  grid-gap: 60px;
+  margin-top: 50px;
+  grid-gap: 70px;
 `;
 
 const PostTemplate = ({

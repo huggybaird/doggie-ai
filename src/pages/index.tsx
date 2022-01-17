@@ -24,9 +24,12 @@ const IndexPage = (): JSX.Element => {
       <WidthLimitedGrid>
         <div className="about-container">
           <Helmet title={`${config.website.title}`} />
+        </div> 
+        <div>
+          
         </div>
-        <h1>Baird added an index</h1>
-
+        <p>Robotics & Technology</p> 
+        <img src="/images/zobo-robot-mobile.svg" />
       </WidthLimitedGrid>
     </Layout>
   );

@@ -11,12 +11,13 @@ const Wrapper = styled.div`
   width: 100%;
 
   display: grid;
-  grid-gap: 100px;
+  grid-gap: 120px;
   grid-template-columns: 1fr 1fr;
+  margin-top: 50px;
 
   @media (max-width: ${constants.breakpoints.lg}) {
     grid-template-columns: 1fr;
-    gap: 60px;
+    gap: 120px;
   }
 `;
 

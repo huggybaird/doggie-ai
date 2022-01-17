@@ -29,11 +29,11 @@ const LayoutGrid = styled.div`
   min-height: 100vh;
   min-width: 100%;
 
-  padding-top: 6px;
+  padding-top: 10px;
 
   display: grid;
   grid-template-columns: 100%;
-  gap: 40px; 
+  gap: 10px; 
   align-content: space-between;
 
   @media (max-width: ${constants.breakpoints.sm}) {
